@@ -1,0 +1,12 @@
+var mongoose = require('mongoose');
+var Schema = mongoose.Schema;
+
+var userSchema = new Schema({
+    key_id: String,
+    naver_id: String,
+    kakao_id: String,
+    name: String,
+    email: String
+});
+
+module.exports = mongoose.model('user', userSchema);

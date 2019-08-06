@@ -1,0 +1,115 @@
+<h3>Try This 는 스타트업을 꿈꾸는 모든 사람을 위한 아이디어 공유, 사업화, 인맥 및 프로젝트 관리용 오픈 플렛폼입니다.(다만 지금은 완전 초기 버전)</h3>
+<script>
+	// alert('환영합니다.');
+	alert(ttLogin);
+</script>
+
+<table><td width=20% valign=top>
+	<div>
+		<!--div class="header clearfix">
+			<nav>
+				<ul class="nav nav-pills pull-right">
+					<li role="presentation"><a href="#">Home</a></li>
+                                        <li role="presentation" class="active"><a id="gnbLogin" href="#">Login</a></li>
+					<li role="presentation"><a id="gnbSignup" href="#">회원가입</a></li>
+				</ul>
+			</nav>
+		</div-->
+				<div id="naverIdLogin"></div>
+				<a id="nLogin" href="#"></a>
+				<a id="ttLogin" href="#"></a>
+				<br>
+	</div>
+	<table><tr>
+	<a id="kakao-login-btn"></a>
+    <a href="http://developers.kakao.com/logout"></a>
+    <script type='text/javascript'>
+      //<![CDATA[
+        // 사용할 앱의 JavaScript 키를 설정해 주세요.
+        Kakao.init('236501b0a924306d9fa59d858acd0f68');
+        // 카카오 로그인 버튼을 생성합니다.
+        Kakao.Auth.createLoginButton({
+          container: '#kakao-login-btn',
+          success: function(authObj) {
+			// alert(JSON.stringify(authObj));
+			document.getElementById('kakao-login-result').innerText = 'success: ' + JSON.stringify(authObj);
+			},
+    		fail: function(err) {
+			document.getElementById('kakao-login-result').innerText = 'fail: ' + JSON.stringify(err);
+			}
+        });
+      //]]>
+	</script>
+	</tr>
+	<tr><td>
+	<div id="plusfriend-addfriend-button"></div>
+<script type='text/javascript'>
+    // 플러스친구 친구추가 버튼을 생성합니다.
+    Kakao.PlusFriend.createAddFriendButton({
+      container: '#plusfriend-addfriend-button',
+      plusFriendId: '_gxiEPT' // 플러스친구 홈 URL에 명시된 id로 설정합니다.
+    });
+  //]]>
+</script></td>
+<td>
+<div id="plusfriend-chat-button"></div>
+<script type='text/javascript'>
+    // 플러스친구 1:1채팅 버튼을 생성합니다.
+    Kakao.PlusFriend.createChatButton({
+      container: '#plusfriend-chat-button',
+      plusFriendId: '_gxiEPT' // 플러스친구 홈 URL에 명시된 id로 설정합니다.
+    });
+  //]]>
+</script>
+</td>
+</tr></table>
+
+<!--쿠팡-->
+<p><a href="https://coupa.ng/bhvzPT">쿠팡</a></p>
+<a href="https://coupa.ng/bhvzPT" target="_blank"><img src="https://static.coupangcdn.com/image/affiliate/category/20180610/coupang1108-120-x-60.jpg" alt=""></a>
+<!--iframe src="https://ads-partners.coupang.com/iframe/search-bar?id=19070315074711104211008967-l2&type=l2&trackingCode=AF2009533" width="90%" height="44" frameborder="0" scrolling="no"></iframe-->
+<iframe id="coupangLink" width="90%" height="36" frameborder="0" scrolling="no"></iframe>
+<div>Test Link</div>
+<iframe id="coupangLinkTest" width="90%" height="36" frameborder="0" scrolling="no"></iframe>
+
+<!--구글 검색창-->
+<p>
+<form method=get action="http://www.google.co.kr/search" target="_blank" >   
+Google  <input type=text name=q size=10>
+<input type=submit value="검색">
+</form>
+</p>
+<!--script async src="https://cse.google.com/cse.js?cx=018172071437808938261:x3mjnauxn1m"></script>
+<div class="gcse-search"></div-->
+
+<!--네이버검색창-->
+<p>
+<FORM name='form' method='get' action='https://search.naver.com/search.naver' target="_blank">
+<INpUT type='hidden' name='ie' value='UTF-8'>
+네이버  <INpUT type='text' size=10 name=query>
+<INpUT type='submit' value="검색">
+</FORM>
+</p>
+
+<h3>Contact Us</h3>
+<h4>trythiscokr@gmail.com</h4>
+<% include ./form.ejs %>
+
+</td>
+
+<!--본문-->
+<td valign=top>
+	<% include ./contents1.ejs %>
+</td>
+</table>
+
+<% include ./naverlogin.ejs %>
+
+    <script>
+		url = "https://ads-partners.coupang.com/iframe/search-bar?id=19070315074711104211008967-l2&type=l2&trackingCode=AF2009533";
+		$("#coupangLink").attr('src',url);
+	</script>
+	<script>
+		url = "https://ads-partners.coupang.com/iframe/search-bar?id=1907031507471110421100" + "0001" + "-f2&type=f2&trackingCode=AF2009533";
+		$("#coupangLinkTest").attr('src',url);
+    </script>

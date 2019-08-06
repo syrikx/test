@@ -1,0 +1,96 @@
+<div id="naverIdLogin"></div>
+<form action="/" method="post">
+	<fieldset>                
+		이메일 : <input type="text" name="email" id="login_email" size="14"/> <br />
+		<input type="submit" value="Log in">
+	</fieldset>
+</form>
+<br>
+
+<form action="/api/users" method="post">
+	<fieldset>
+		이 름 : <input type="text" name="name" id="name" size="15"/> <br />
+		네이버ID : <input type="text" name="naver_id" id="naver_id" size="12"/> <br />
+		카카오ID : <input type="text" name="kakao_id" id="kakao_id" size="12"/> <br />
+		휴대전화 : <input type="text" name="tel" id="tel" size="12"/> <br />                
+		이메일 : <input type="text" name="email" id="email" size="14"/> <br />
+		<input type="submit" value="Sign Up">
+	</fieldset>
+</form>
+
+<!-- (3) LoginWithNaverId Javscript 설정 정보 및 초기화 -->
+<script>
+		
+		var naverLogin = new naver.LoginWithNaverId(
+			{
+				clientId: "a7mzOOcooths2uvbefeO",
+				callbackUrl: "http://trythis.co.kr/callback",
+				isPopup: false,
+				loginButton: {color: "green", type: 3, height: 0}
+			}
+		);
+		/* (4) 네아로 로그인 정보를 초기화하기 위하여 init을 호출 */
+		naverLogin.init();
+		
+		/* (4-1) 임의의 링크를 설정해줄 필요가 있는 경우 */
+		$("#gnbLogin").attr("href", naverLogin.generateAuthorizeUrl()); 
+
+		/* (5) 현재 로그인 상태를 확인 */
+		window.addEventListener('load', function () {
+			naverLogin.getLoginStatus(function (status) {
+				if (status) {
+					setLoginStatus();
+				}
+			});
+        });
+
+		/* (6) 로그인 상태가 "true" 인 경우 로그인 버튼을 없애고 사용자 정보를 출력합니다. */
+		function setLoginStatus() {
+			var Email = naverLogin.user.getEmail();
+			var Name = naverLogin.user.getName();
+			var Nickname = naverLogin.user.getNickName();
+			var ProfileImage = naverLogin.user.getProfileImage();
+			var Birthday = naverLogin.user.getBirthday();			
+			var Age = naverLogin.user.getAge();
+			var Gender = naverLogin.user.getGender();
+			var Naver_id = naverLogin.user.getId();
+			$("#naverIdLogin_loginButton").html('<h4>' + Name + '님 반갑습니다.</h4>');
+			$("#gnbLogin").html("Logout");
+			$("#gnbLogin").attr("href", "#");
+			/* (7) 로그아웃 버튼을 설정하고 동작을 정의합니다. */
+			$("#gnbLogin").click(function () {
+				naverLogin.logout();
+                location.replace('/');
+			});
+			document.getElementById('naver_id').value = Naver_id;
+			document.getElementById('name').value = Name;
+			document.getElementById('email').value = Email;
+			document.getElementById('login_email').value = Email;
+			// post_to_url('./api/login',{'email':Email});
+		}
+		function post_to_url(path, params, method) {
+    		method = method || "post"; // 전송 방식 기본값을 POST로
+ 
+    
+    		var form = document.createElement("form");
+    		form.setAttribute("method", method);
+    		form.setAttribute("action", path);
+ 
+    		//히든으로 값을 주입시킨다.
+    		for(var key in params) {
+        		var hiddenField = document.createElement("input");
+        		hiddenField.setAttribute("type", "hidden");
+        		hiddenField.setAttribute("name", key);
+        		hiddenField.setAttribute("value", params[key]);
+ 
+				
+        		form.appendChild(hiddenField);
+    		}
+ 
+    		document.body.appendChild(form);
+    		form.submit();
+		}
+</script>
+
+
+
