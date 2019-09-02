@@ -6,7 +6,16 @@ var express     = require('express');
 var app         = express();
 var bodyParser  = require('body-parser');
 var mongoose    = require('mongoose');
+var session = require('express-session');
 
+app.use(express.static('public'));
+
+app.use(session({
+    secret: '@#@$LoginMadeBySyrikx#@$#$',
+    resave: false,
+    saveUninitialized: true
+   }));
+   
 // [ CONFIGURE mongoose ]
 
 // CONNECT TO MONGODB SERVER
@@ -21,6 +30,8 @@ db.once('open', function(){
 // DEFINE MODEL
 var Book = require('./models/book');
 var User = require('./models/user');
+
+User.on('index', console.error);
 
 // [CONFIGURE APP TO USE bodyParser]
 app.use(bodyParser.urlencoded({ extended: true }));

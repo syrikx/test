@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta name="description" content="Try This" />
+  <meta name="keywords" content="Try This" />
+  <meta name="author" content="Airvengers" />
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- CSS  -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="/css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="/css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
+</head>
+<body>
+  <nav class="teal darken-1" role="navigation">
+    <div class="nav-wrapper container"><a id="logo-container" href="/" class="brand-logo">Try This</a>
+
+      <ul class="right hide-on-med-and-down">
+          <li><a href="/api/logout">Logout</a></li>
+          <li><a href="#">Navbar2</a></li>
+        </ul>
+
+      <ul class="right">
+          <li>
+              <a id="custom-login-btn" href="javascript:loginWithKakao()">Login                  
+                  </a>
+                  <script type='text/javascript'>
+                    //<![CDATA[
+                      // 사용할 앱의 JavaScript 키를 설정해 주세요.
+                      Kakao.init('fa22fa5c04bcde6b834f4f49503c1a95');
+                      function loginWithKakao() {
+                        // 로그인 창을 띄웁니다.
+                        Kakao.Auth.login({
+                          success: function(authObj) {
+                            
+                            // alert(JSON.stringify(authObj));
+                            Kakao.API.request({
+                              url: '/v2/user/me',
+                              success: function(res) {
+                                var id = res.id
+                                var name = res.properties.nickname
+                                var email = res.kakao_account.email
+                                post_to_url('/api/login',{'id':id, 'name':name, 'email':email});
+                                //alert(JSON.stringify(res));
+                              },
+                              fail: function(error) {
+                                alert(JSON.stringify(error));
+                              }
+                            });
+                          },
+                          fail: function(err) {
+                            alert(JSON.stringify(err));
+                          }
+                        });
+                      }
+                      function post_to_url(path, params, method) {
+                          method = method || "post"; // 전송 방식 기본값을 POST로  
+                          var form = document.createElement("form");
+                          form.setAttribute("method", method);
+                          form.setAttribute("action", path);
+                  
+                          //히든으로 값을 주입시킨다.
+                          for(var key in params) {
+                              var hiddenField = document.createElement("input");
+                              hiddenField.setAttribute("type", "hidden");
+                              hiddenField.setAttribute("name", key);
+                              hiddenField.setAttribute("value", params[key]);
+                  
+                          
+                              form.appendChild(hiddenField);
+                          }
+                  
+                          document.body.appendChild(form);
+                          form.submit();
+                      }
+                    //]]>
+                  </script>  
+          </li>
+      </ul>
+
+      <ul id="nav-mobile" class="sidenav">
+        <li><a href="api/logout">Logout</a></li>
+        <li><a href="#">Navbar2</a></li>
+      </ul>
+      <a href="#" data-target="nav-mobile" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+    </div>
+  </nav>
+  <div class="section no-pad-bot" id="index-banner">
+    <div class="container"></div>
+      <h1 class="header center deep-orange-text hide-on-small-only">Try This</h1>
+      <div class="row center">
+        <h5 class="header col s12 light hide-on-small-only">스타트업을 꿈꾸는 모든 사람을 위한 아이디어 공유, 사업화, 인맥 및 프로젝트 관리용 오픈 플렛폼</h5>
+        <h6 class="header col s12 light hide-on-med-and-up">스타트업을 꿈꾸는 모든 사람을 위한 아이디어 공유, 사업화, 인맥 및 프로젝트 관리용 오픈 플렛폼</h6>
+        <!----% console.log(userid); %-->
+        <% if(typeof userid!=="undefined"){ %>
+          <h6><%= username %>님 환영합니다. (email: <%= email %>)</h6>
+          <% if(!usersigned){ %>
+            <h6> 아직 TryThis 회원가입 전이시네요~ 회원가입 후 이벤트와 혜택 받아가세요 </h6>
+          <% } %>
+        <% }else{ %>
+          <h6> 로그인 하시면 더 다양한 이벤트와 혜택이 있습니다. </h6>
+        <% } %>
+      </div>
+    </div>
+  </div>
+  <div class="container">
+    <div class="section.no-pad">
+
+      <!--   Icon Section   -->
+      <div class="row">   
+        
+        <div class="col s12">
+          <div class="icon-block">
+            <h5 class="center">회원 가입(공사중)</h5>
+            <div class="divider"></div>
+            <br>
+            
+            <form class="col s12" action="/api/users" method="post">
+              <div class="row">
+                <div class="input-field col s6">
+                  <input id="username" name="username" type="text" required>
+                  <label for="username">이름 (필수)</label>
+                </div>
+                <div class="input-field col s6">
+                  <input id="email" name="email" type="text" required>
+                  <label for="email">Email (필수)</label>
+                </div>
+              </div>  
+              <div class="row">
+                <div class="input-field col s6">
+                  <input id="telnumber" name="telnumber" type="text" placeholder="(예) 01098761234" minlength=9 maxlength=11 required>
+                  <label for="telnumber">전화번호 (필수)</label>
+                  <span class="helptext">이벤트 참여 및 연락을 위해 전화번호 입력을 부탁드립니다.</span>
+                </div>
+                <div class="input-field col s6">
+                  <input id="kakaoid" name="kakaoid" type="text">
+                  <label for="kakaoid">카카오 ID (선택)</label>
+                </div>
+              </div>
+              <div class="row">
+                <div class="input-field col s3">
+                      
+                      <p>
+                              <label>
+                                <input name="gender" type="radio" value="male"/>
+                                <span>남 </span>
+                              </label>
+                      </p>
+                  <label for="gender" class="active">성별 (선택)</label>
+                </div>
+                <div class="input-field col s3">
+                      
+                      <p>
+                              <label>
+                                <input name="gender" type="radio" value="female"/>
+                                <span>여 </span>
+                              </label>
+                      </p>
+                  <label for="genderF" class="active"></label>
+                </div>
+                <div class="input-field col s6">
+                      <input id="birthday" name="birthday" type="text" placeholder="(예) 19920721" minlength=8 maxlength=8>
+                      <label for="birthday">생년월일 (선택)</label>
+                </div>
+              </div>
+              <div class="row">
+                <div class="input-field col s6">
+                      <input id="affiliate" name="affiliate" type="text" placeholder="(예) 100001" minlength=6 maxlength=6>
+                      <label for="affiliate">추천인 (선택)</label>
+                </div>
+                <div class="row">
+                    <div class="input-field col s6">
+                          <input id="homepage" name="homepage" type="text">
+                          <label for="homepage">블로그 or 홈페이지 (선택)</label>
+                    </div>
+                </div>
+                <input type="hidden" name="kakao_id" id="kakao_id">
+                <button class="btn-small waves-effect waves-light" type="submit" name="action">Submit
+                  <i class="material-icons right">send</i>
+                </button>
+              
+
+            </form>
+
+
+
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+    <br><br>
+  </div>
+
+  <footer class="page-footer teal darken-1">
+    <div class="footer-copyright">
+      <div class="container">
+      Made by <a class="deep-orange-text text-lighten-3" href="mailto:trythiscokr@gmail.com">TryThis.co.kr</a>
+      </div>
+    </div>
+  </footer>
+
+
+  <!--  Scripts-->
+  <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+  <script src="/js/materialize.js"></script>
+  <script src="/js/init.js"></script>
+  <script>
+    document.getElementById('username').value = "<%= username %>";
+    document.getElementById('email').value = "<%= email %>";
+    document.getElementById('kakao_id').value = "<%= userid %>";
+  </script>
+  
+
+  <script>
+      url = "https://ads-partners.coupang.com/iframe/search-bar?id=19070315074711104211008967-f2&type=f2&trackingCode=AF2009533";
+      $("#coupangLink").attr('src',url);
+  </script>
+  <script>
+    url = "https://ads-partners.coupang.com/iframe/search-bar?id=1907031507471110421100" + "0001" + "-f2&type=f2&trackingCode=AF2009533";
+    $("#coupangLinkTest").attr('src',url);
+  </script>
+
+  </body>
+</html>

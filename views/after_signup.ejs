@@ -1,0 +1,23 @@
+
+<body>
+<% if (reg_error) { %>
+    <h2>이미 등록된 네이버/카카오ID 혹은 이메일 주소 입니다.<br>1초 후 Home으로 Redirect 합니다.<br>작동하지 않으면 <a href='/'>Home</a>을 누르세요</h2>
+    <script>
+        var time = 1000;
+        setTimeout(() => location.replace('/'), time);
+        //location.replace('/')
+        </script>
+<% } %>
+<% if (!reg_error) { %>
+    <h2>회원가입을 성공적으로 완료하였습니다.<br>2초 후 Home으로 Redirect 합니다.<br>다시 한번 로그인 해 주시기 바랍니다.<br>작동하지 않으면 <a href='/member'>Home</a>을 누르세요</h2>
+    <script>
+        var time = 2000;
+        setTimeout(() => location.replace('/api/logout'), time);
+        //location.replace('/')
+        </script>
+<% } %>
+
+
+</body>
+
+  

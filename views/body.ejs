@@ -22,16 +22,18 @@
 	</div>
 	<table><tr>
 	<a id="kakao-login-btn"></a>
-    <a href="http://developers.kakao.com/logout"></a>
+	<a href="http://developers.kakao.com/logout"></a>
+	<iframe id="kakao-login-result" width="90%" height="36" frameborder="0" scrolling="no">
+	<div>test</div>		
+	</iframe>
     <script type='text/javascript'>
       //<![CDATA[
         // 사용할 앱의 JavaScript 키를 설정해 주세요.
-        Kakao.init('236501b0a924306d9fa59d858acd0f68');
+        Kakao.init('fa22fa5c04bcde6b834f4f49503c1a95');
         // 카카오 로그인 버튼을 생성합니다.
         Kakao.Auth.createLoginButton({
           container: '#kakao-login-btn',
           success: function(authObj) {
-			// alert(JSON.stringify(authObj));
 			document.getElementById('kakao-login-result').innerText = 'success: ' + JSON.stringify(authObj);
 			},
     		fail: function(err) {
@@ -93,7 +95,6 @@ Google  <input type=text name=q size=10>
 
 <h3>Contact Us</h3>
 <h4>trythiscokr@gmail.com</h4>
-<% include ./form.ejs %>
 
 </td>
 
